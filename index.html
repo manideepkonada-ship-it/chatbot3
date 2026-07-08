@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GourmetGuide AI - Food & Nutrition Chatbot</title>
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-icon">🥗</div>
+                    <span class="logo-text">GourmetGuide</span>
+                </div>
+                <button class="icon-btn close-sidebar-btn" id="closeSidebarBtn" title="Close Sidebar">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <button class="new-chat-btn" id="newChatBtn">
+                <i data-lucide="plus"></i>
+                <span>New Chat</span>
+            </button>
+            
+            <div class="sidebar-section-title">Recent Chats</div>
+            
+            <div class="chat-history-list" id="chatHistoryList">
+                <!-- Chat history items will be dynamically injected here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="footer-action-btn" id="themeToggleBtn">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                    <span>Toggle Theme</span>
+                </button>
+                <button class="footer-action-btn" id="settingsBtn">
+                    <i data-lucide="settings"></i>
+                    <span>Gemini API Key</span>
+                </button>
+                <button class="footer-action-btn" id="clearAllBtn">
+                    <i data-lucide="trash-2"></i>
+                    <span>Clear All Chats</span>
+                </button>
+                <div class="user-profile">
+                    <div class="avatar">U</div>
+                    <div class="user-info">
+                        <span class="user-name">Gourmet Explorer</span>
+                        <span class="user-email">foodie@gourmet.ai</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <!-- Top Navigation Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="icon-btn menu-btn" id="menuBtn" title="Open Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <div class="model-selector-wrapper">
+                        <select class="model-select" id="modelSelect">
+                            <option value="flash" selected>🥗 Gourmet-Flash 1.5</option>
+                            <option value="nutritionist">🥑 Dietitian-Pro (Specialist)</option>
+                            <option value="chef">🍳 Chef-Master (Recipes)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-status">
+                        <span class="status-indicator online"></span>
+                        <span class="status-text">AI Ready</span>
+                    </div>
+                    <div class="avatar header-avatar">U</div>
+                </div>
+            </header>
+
+            <!-- Chat Viewport -->
+            <div class="chat-viewport" id="chatViewport">
+                <!-- Welcome/Landing View -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-header">
+                        <h1 class="welcome-title">Hello, <span class="gradient-text" id="welcomeUserName">Gourmet</span></h1>
+                        <p class="welcome-subtitle">How can I assist your culinary journey today?</p>
+                    </div>
+                    
+                    <div class="suggestion-grid">
+                        <div class="suggestion-card" data-prompt="Analyze the calories and nutrition of: 1 avocado, 2 scrambled eggs, and a slice of sourdough toast.">
+                            <img src="assets/avocado_toast.jpg" alt="Analyze Meal" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Analyze Meal</h3>
+                                <p class="card-desc">Calculate protein, carbs, fat, and calories for a food description.</p>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="card-arrow"></i>
+                        </div>
+                        <div class="suggestion-card" data-prompt="What are the famous food streets in Hyderabad and what dishes should I try there?">
+                            <img src="assets/street_food.jpg" alt="Food Streets" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Famous Food Streets</h3>
+                                <p class="card-desc">Discover the top local street food spots based on city name.</p>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="card-arrow"></i>
+                        </div>
+                        <div class="suggestion-card" data-prompt="Create a 7-day high-protein vegetarian diet plan schedule. Daily calorie target: 2000 kcal.">
+                            <img src="assets/buddha_bowl.jpg" alt="Diet Plan" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Diet Plan Schedule</h3>
+                                <p class="card-desc">Generate structured weekly schedules matching your calorie goals.</p>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="card-arrow"></i>
+                        </div>
+                        <div class="suggestion-card" data-prompt="Give me a quick 15-minute healthy dinner recipe using chicken and broccoli.">
+                            <img src="assets/smoothie_bowl.jpg" alt="Healthy Recipe" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Healthy Recipe</h3>
+                                <p class="card-desc">Get fast, step-by-step directions for nutritional home meals.</p>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="card-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Chat Messages -->
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Message items will be dynamically injected here -->
+                </div>
+            </div>
+
+            <!-- Chat Footer Input Area -->
+            <footer class="chat-footer">
+                <div class="input-container-wrapper">
+                    <!-- Attached File Preview (Hidden initially) -->
+                    <div class="attachment-preview-bar" id="attachmentPreviewBar" style="display: none;">
+                        <div class="preview-thumbnail-container">
+                            <span id="previewThumbnail" class="preview-thumbnail-emoji">🥑</span>
+                            <button class="remove-attachment-btn" id="removeAttachmentBtn">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <div class="preview-details">
+                            <span class="preview-filename" id="previewFilename">Selected food.jpg</span>
+                            <span class="preview-status">Ready to analyze</span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-container">
+                        <button class="input-action-btn" id="attachBtn" title="Upload food photo">
+                            <i data-lucide="image"></i>
+                        </button>
+                        <textarea 
+                            class="chat-textarea" 
+                            id="chatInput" 
+                            placeholder="Ask GourmetGuide about meals, calories, food streets, or recipes..."
+                            rows="1"
+                        ></textarea>
+                        <button class="send-btn" id="sendBtn" title="Send message" disabled>
+                            <i data-lucide="send-horizontal"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="disclaimer-text">
+                    GourmetGuide AI can make mistakes. Consider double-checking recipe details and professional health advice.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Image Upload Simulator Modal -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Select a Food Image to Analyze</h3>
+                <button class="icon-btn close-modal-btn" id="closeModalBtn">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Simulate uploading a meal photo for AI instant calorie and nutrition analysis:</p>
+                <div class="food-gallery">
+                    <div class="gallery-item" data-food-id="avocado_toast" data-food-name="Avocado Toast & Sourdough with Poached Egg.jpg" data-food-desc="Avocado Toast with Sourdough & Egg" data-food-emoji="🥑🍳">
+                        <img src="assets/avocado_toast.jpg" alt="Avocado Toast" class="gallery-image">
+                        <span class="gallery-label">Avocado Toast & Egg</span>
+                    </div>
+                    <div class="gallery-item" data-food-id="burger_fries" data-food-name="Cheeseburger with French Fries.jpg" data-food-desc="Cheeseburger & Crispy Fries" data-food-emoji="🍔🍟">
+                        <img src="assets/cheeseburger.jpg" alt="Cheeseburger" class="gallery-image">
+                        <span class="gallery-label">Cheeseburger & Fries</span>
+                    </div>
+                    <div class="gallery-item" data-food-id="buddha_bowl" data-food-name="Quinoa Vegan Buddha Bowl.jpg" data-food-desc="Quinoa Vegan Buddha Bowl" data-food-emoji="🥗🍠">
+                        <img src="assets/buddha_bowl.jpg" alt="Vegan Buddha Bowl" class="gallery-image">
+                        <span class="gallery-label">Vegan Buddha Bowl</span>
+                    </div>
+                    <div class="gallery-item" data-food-id="smoothie_bowl" data-food-name="Berry Banana Protein Smoothie.jpg" data-food-desc="Berry Banana Smoothie Bowl" data-food-emoji="🍓🍌">
+                        <img src="assets/smoothie_bowl.jpg" alt="Strawberry Smoothie" class="gallery-image">
+                        <span class="gallery-label">Strawberry Smoothie</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Gemini API Key Configuration</h3>
+                <button class="icon-btn close-modal-btn" id="closeSettingsModalBtn">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Configure a custom Gemini API Key to call the AI directly from the client. (Saved locally in your browser)</p>
+                <div style="margin-top: 15px;">
+                    <label for="apiKeyInput" style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--text-secondary);">GEMINI_API_KEY</label>
+                    <input type="password" id="apiKeyInput" placeholder="Enter API Key (AI Studio)..." style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border-color); background-color:var(--input-bg); color:var(--text-primary); margin-bottom:12px;">
+                    <p style="font-size:11px; color:var(--text-secondary); line-height: 1.4;">If empty, the client will first try to call the backend server at <code>/api/chat</code>. If the server is offline, it will fall back to simulated guides.</p>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:15px;">
+                    <button class="new-chat-btn" id="saveApiKeyBtn" style="margin-bottom:0; padding:10px 20px;">Save Configuration</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
